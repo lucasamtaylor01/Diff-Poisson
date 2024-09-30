@@ -26,7 +26,3 @@ Para implementar e resolver o problema, usamos as seguintes bibliotecas Python:
 1. **Discretização**: Utilizamos o método de diferenças finitas centradas.
 2. **Resolução do Sistema Linear**: Aplicamos um método iterativo para resolver o sistema linear resultante da discretização.
 3. **Simulações**: Realizamos simulações para diferentes valores de $N$ (tamanho da malha).
-
-## Nota de Responsabilidade 📜
-
-Este material é fornecido para fins acadêmicos. O uso deste conteúdo é de inteira responsabilidade do usuário. Consulte a licença para mais informações.
