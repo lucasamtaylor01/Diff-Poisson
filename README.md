@@ -13,4 +13,4 @@ A disciplina aborda métodos numéricos aplicados à solução de equações dif
 
 ## Nota de Responsabilidade 📜
 
-O uso deste material é de responsabilidade do usuário. Não nos responsabilizo por plágio ou uso indevido. Para mais detalhes, consulte a [licença](LICENSE.md).
+O uso deste material é de responsabilidade do usuário. Não nos responsabilizamos por plágio ou uso indevido. Para mais detalhes, consulte a [licença](LICENSE.md).
