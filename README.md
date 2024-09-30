@@ -11,14 +11,6 @@ A disciplina aborda métodos numéricos aplicados à solução de equações dif
 - Análise de estabilidade e convergência 📊;
 - Implementação e uso de ferramentas computacionais para simulação numérica 💻.
 
-## Organização dos Exercícios 📂
-
-Os exercícios estão organizados por tópicos, conforme os métodos estudados ao longo da disciplina. Cada pasta contém:
-
-- O enunciado do problema 📝.
-- Implementação do método numérico em Python 🐍.
-- Relatórios explicando os resultados obtidos 📑.
-
 ## Nota de Responsabilidade 📜
 
 O uso deste material é de responsabilidade do usuário. Não nos responsabilizo por plágio ou uso indevido. Para mais detalhes, consulte a [licença](LICENSE.md).
