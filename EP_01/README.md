@@ -29,4 +29,4 @@ Para implementar e resolver o problema, usamos as seguintes bibliotecas Python:
 
 ## Nota de Responsabilidade 📜
 
-Este material é fornecido para fins acadêmicos. O uso deste conteúdo é de inteira responsabilidade do usuário. Consulte a [licença](../LICENSE.md) para mais informações.
+Este material é fornecido para fins acadêmicos. O uso deste conteúdo é de inteira responsabilidade do usuário. Consulte a [licença](../../LICENSE.md) para mais informações.
