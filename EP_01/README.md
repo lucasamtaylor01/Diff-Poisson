@@ -1,4 +1,4 @@
-# Exercício Programa I - MAP2320
+# Exercício Programa I
 
 Este projeto é parte da disciplina **Métodos Numéricos em Equações Diferenciais II** e tem como foco a resolução numérica da **Equação de Poisson** no quadrado unitário utilizando o método de diferenças finitas.
 
