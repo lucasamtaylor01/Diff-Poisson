@@ -1,4 +1,4 @@
-# MAP2320: Exercícios Computacionais
+# MAP2320: Exercícios Programa 💻 
 
 Este repositório contém os exercícios computacionais desenvolvidos para a disciplina **MAP2320 - Métodos Numéricos em Equações Diferenciais II**, oferecida no curso de Matemática Aplicada e Computacional (BMAC) do Instituto de Matemática e Estatística da Universidade de São Paulo (IME-USP).
 
