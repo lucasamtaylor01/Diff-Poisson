@@ -1,93 +1,102 @@
+'''
+Exercício 2 - resolução 
+'''
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from scipy.sparse import diags, linalg
 
-# Função exata u_exata e função f para a equação de Poisson
-def u_exata(x, y):
-    return np.cos(x) * np.sin(y)
+# Definindo as funções
 
-def f(x, y):
-    return -2 * np.cos(x) * np.sin(y)
+u = lambda x,y: np.cos(x) * np.sin(y)
+f = lambda x,y: -2 * np.cos(x) * np.sin(y)
 
-# Item a: Verificar se u_exata satisfaz a equação com a função de força f
-def verificar_solucao():
-    x_vals = np.linspace(0, 1, 5)
-    y_vals = np.linspace(0, 1, 5)
-    for x in x_vals:
-        for y in y_vals:
-            lhs = f(x, y)  # Lado esquerdo da equação (função de força)
-            rhs = -2 * np.cos(x) * np.sin(y)  # Lado direito usando u_exata
-            if not np.isclose(lhs, rhs):
-                print(f"Erro: para (x={x}, y={y}), LHS = {lhs}, RHS = {rhs}")
+## item (a)
+
+def verify() -> bool:
+    X = np.linspace(0, 1, 5)
+    Y = np.linspace(0, 1, 5)
+    for x in X:
+        for y in Y:
+            left = f(x,y) # esquerda da eq.
+            right = -2 * np.cos(x) * np.sin(y) # direita da eq.
+            
+            if not np.isclose(left, right):
+                print(f"Erro: para (x={x}, y={y}), esquerda = {left}, direita = {right}")
                 return False
-    print("A solução u_exata(x, y) satisfaz a equação com a função de força f(x, y).")
-    return True
+    
+    return ("A solução u(x,y) satisfaz a equação com a função de força f(x,y)!") 
 
-# Função para montar a matriz A e o vetor b usando diferenças finitas centradas
-def montar_sistema_poisson(N, f, g):
-    h = 1 / N
-    n = (N - 1) ** 2  # Número de incógnitas
-    A = diags([-1, -1, 4, -1, -1], [-N + 1, -1, 0, 1, N - 1], shape=(n, n)).tocsc()  # Matriz esparsa
+print("Validando o item (a)")
+verify()
+
+## item (b) e (c)
+
+def poisson_system(N: int, f: float, g: float):
+    h = 1/N
+    n = (N-1)**2 
+    diagonals = [-1, -1, 4, -1, -1]
+    offsets = [-N+1, -1, 0, 1, N-1] #confere o deslocamento das diagonais
+    
+    # matriz A 
+    A: csc_array = diags(diagonals=diagonals, offsets=offsets, shape=(n,n)).tocsc()
+    
+    # vetor b (termos da equação e cond. de contorno)
     b = np.zeros(n)
 
-    # Preencher o vetor b com f e condições de contorno
-    for i in range(1, N):
+    # Preenchimento de b com f (pontos internos)
+    for k in range(1, N):
         for j in range(1, N):
-            k = (i - 1) * (N - 1) + (j - 1)  # Índice lexicográfico
-            x, y = i * h, j * h
-            b[k] = h**2 * f(x, y)
-            if i == 1:
-                b[k] -= g(0, y)  # Condição na borda esquerda
-            if i == N - 1:
-                b[k] -= g(1, y)  # Condição na borda direita
+            i = (k - 1) * (N-1) + (j-1) # ordem lexicográfica
+            x, y = k * h, j * h
+            b[i] = h ** 2 * f(x, y)
+    
+    # Bordas (esq -> dir) & (inf -> sup): condições de contorno
+            if k == 1:
+                b[i] -= g(0, y)  # borda esquerda
+            if k == N - 1:
+                b[i] -= g(1, y)  # borda direita
             if j == 1:
-                b[k] -= g(x, 0)  # Condição na borda inferior
+                b[i] -= g(x, 0)  # borda inferior
             if j == N - 1:
-                b[k] -= g(x, 1)  # Condição na borda superior
-
+                b[i] -= g(x, 1)  # borda superior
+    
     return A, b
 
-# Função para calcular o erro absoluto entre a solução exata e a numérica
-def calcular_erros(N, u_exata, u_numerica):
-    h = 1 / N
+# Função que calcula o erro das soluções
+def error_function(N, exact, numeric) -> pd.DataFrame:
     x = np.linspace(0, 1, N+1)
     y = np.linspace(0, 1, N+1)
     X, Y = np.meshgrid(x, y)
 
     # Solução exata nos pontos da grade
-    U_exata = u_exata(X, Y)
+    U_exata = exact(X, Y)
 
     # Inserir solução numérica nos pontos internos
     U_numerica = np.zeros((N+1, N+1))
-    U_numerica[1:N, 1:N] = u_numerica.reshape((N-1, N-1))
+    U_numerica[1:N, 1:N] = numeric.reshape((N-1, N-1))
 
     # Calcular o erro absoluto
-    erros = np.abs(U_exata - U_numerica)
-    return erros
-
-# Função para imprimir os erros usando Pandas (Item c)
-def imprimir_erros(N, u_exata, u_numerica):
-    erros = calcular_erros(N, u_exata, u_numerica)
-    
-    # Criar um DataFrame do Pandas com os erros
-    df = pd.DataFrame(erros, columns=[f"Erro y={i/(N+1):.2f}" for i in range(N+1)],
+    errors = np.abs(U_exata - U_numerica)
+    df = pd.DataFrame(errors, 
+                      columns=[f"Erro y={i/(N+1):.2f}" for i in range(N+1)],
                       index=[f"x={i/(N+1):.2f}" for i in range(N+1)])
-    print(df)
+    
+    return df
 
-# Função para plotar a solução exata e numérica (Item b)
-def plotar_solucoes(N, u_exata, u_numerica):
-    h = 1 / N
+# plotando as soluções
+def plot_solutions(N, exact, numeric):
     x = np.linspace(0, 1, N+1)
     y = np.linspace(0, 1, N+1)
     X, Y = np.meshgrid(x, y)
 
     # Solução exata
-    U_exata = u_exata(X, Y)
+    U_exata = exact(X, Y)
 
     # Inserir solução numérica nos pontos internos
     U_numerica = np.zeros((N+1, N+1))
-    U_numerica[1:N, 1:N] = u_numerica.reshape((N-1, N-1))
+    U_numerica[1:N, 1:N] = numeric.reshape((N-1, N-1))
 
     # Plotar solução exata
     plt.figure(figsize=(12, 6))
@@ -105,36 +114,15 @@ def plotar_solucoes(N, u_exata, u_numerica):
 
     plt.show()
 
-# Função principal para resolver o problema (Itens b e c)
-def resolver_poisson(N, f, u_exata):
-    # Definir as condições de contorno (g) como a própria solução exata
-    def g(x, y):
-        return u_exata(x, y)
+def solve_system(N, f, u):
+    g = lambda x,y: u(x,y)
 
-    # Montar o sistema linear
-    A, b = montar_sistema_poisson(N, f, g)
+    A, b = poisson_system(N, f, g)        #(i)
+    numeric = linalg.spsolve(A,b)         #(ii)
+    plot_solutions(N, u, numeric)         #(iii)
+    print(error_function(N, u, numeric))  #(iv)
 
-    # Resolver o sistema linear
-    u_numerica = linalg.spsolve(A, b)
-
-    # Plotar as soluções (Item b)
-    plotar_solucoes(N, u_exata, u_numerica)
-
-    # Imprimir os erros (Item c)
-    imprimir_erros(N, u_exata, u_numerica)
-
-# Chamar funções para resolver o exercício 2
-def main():
-    print("Resolvendo o exercício 2...")
-
-    # Item a: Verificar se a solução satisfaz a equação
-    print("Item a: Verificando a solução...")
-    verificar_solucao()
-
-    # Item b: Resolver e plotar para N = 50, 100, 200
-    for N in [50, 100, 200]:
-        print(f"\nItem b e c: Resultados para N = {N}")
-        resolver_poisson(N, f, u_exata)
-
-if __name__ == "__main__":
-    main()
+print(f"{'='*10} Simulações {'='*10}\n")
+for N in [50, 100, 200]:
+    print(f"{'*'*5} N = {N} {'*'*5}\n")
+    solve_system(N, f, u)
