@@ -102,7 +102,7 @@ def prompt():
         print("Escolha inválida.")
         return
     
-    g = lambda x,y: exact(x,y)
+    g = lambda x,y: exact(x,y) # atribui cada u_exata
 
     print(f"{'='* 10} Escolha N {'='* 10}\n")
     n = int(input("(1) 20\n(2) 50\n(3) 100\n_:"))
