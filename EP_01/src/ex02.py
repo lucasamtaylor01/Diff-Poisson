@@ -83,6 +83,8 @@ def error_function(N, exact, numeric) -> pd.DataFrame:
                       columns=[f"Erro y={i/(N+1):.2f}" for i in range(N+1)],
                       index=[f"x={i/(N+1):.2f}" for i in range(N+1)])
     
+    # df.to_csv(f"MAP2320\EP_01\data\Problem2/err{N}.csv")
+    # df.to_latex(f"MAP2320\EP_01\data\Problem2\tex_files/err{N}.tex")
     return df
 
 # plotando as soluções
