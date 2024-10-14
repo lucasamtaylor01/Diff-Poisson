@@ -16,7 +16,7 @@ u = lambda x,y: x**4 - 6*x**2*y**2 + y**4 # item (a)
 f_u = lambda x,y: -12*(x**2 + y**2)
 
 v = lambda x,y: np.exp(x) * np.sin(y) # item (b)
-f_v = lambda x,y: -np.exp(x) * np.sin(y)
+f_v = lambda x,y: 0
 
 # Função que desenvolve o sistema de Poisson
 def poisson_system(N: int, f: float, g: float):
