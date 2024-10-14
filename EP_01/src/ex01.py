@@ -18,7 +18,7 @@ f_u = lambda x,y: -12*(x**2 + y**2)
 v = lambda x,y: np.exp(x) * np.sin(y) # item (b)
 f_v = lambda x,y: -np.exp(x) * np.sin(y)
 
-# Função que resolve o sistema de Poisson
+# Função que desenvolve o sistema de Poisson
 def poisson_system(N: int, f: float, g: float):
     h = 1/N
     n = (N-1)**2 
@@ -104,9 +104,15 @@ def prompt():
     
     g = lambda x,y: exact(x,y)
 
-    for N in [20, 50, 100]:
-        A, b = poisson_system(N, f, g)
-        numeric = linalg.spsolve(A,b)
-        plot_solution(N, exact, numeric, title)   
+    print(f"{'='* 10} Escolha N {'='* 10}\n")
+    n = int(input("(1) 20\n(2) 50\n(3) 100\n_:"))
+
+    if n == 1: N = 20
+    elif n == 2: N = 50
+    else: N = 100
+
+    A, b = poisson_system(N, f, g)
+    numeric = linalg.spsolve(A,b)
+    plot_solution(N, exact, numeric, title)   
 
 prompt() # Execução principal
