@@ -1,28 +1,26 @@
-# Estudo do Problema de Dirichlet para a Equação de Poisson com Discretização Finita
+# Study of the Dirichlet Problem for the Poisson Equation with Finite Discretization
 
-Este repositório trata do problema de Dirichlet para a equação de Poisson, que é discretizado em um quadrado unitário utilizando o método de diferenças finitas com espaçamento $h = \frac{1}{N}$. As equações que descrevem $U_{mn}$, juntamente com as condições de contorno, são organizadas em um sistema linear. Esse sistema é então resolvido utilizando uma ordenação lexicográfica para facilitar o processo de solução numérica.
+This repository focuses on the Dirichlet problem for the Poisson equation, which is discretized over the unit square using the finite difference method with spacing $h = \frac{1}{N}$. The equations describing $U_{mn}$, along with the boundary conditions, are organized into a linear system. This system is then solved using lexicographic ordering to facilitate the numerical solution process.
 
-## Descrição do Problema 📝
+## Problem Description 📝
 
-A Equação de Poisson que estamos resolvendo é dada por:
+The Poisson equation we aim to solve is given by:
 
-```math
--\Delta u(x, y) = f(x, y), \quad (x, y) \in \Omega
-```
+$-\Delta u(x, y) = f(x, y), \quad (x, y) \in \Omega$
 
-onde $\Omega = (0, 1) \times (0, 1)$ e as condições de Dirichlet são aplicadas na fronteira $\partial\Omega$.
+where $\Omega = (0, 1) \times (0, 1)$, and Dirichlet boundary conditions are imposed on the boundary $\partial\Omega$.
 
-## Ferramentas Utilizadas 🔧
+## Tools Used 🔧
 
-Para implementar e resolver o problema, usamos as seguintes bibliotecas Python:
+To implement and solve the problem, we use the following Python libraries:
 
-- **Numpy**: Para manipulação de arrays e matrizes.
-- **Scipy**: Para métodos iterativos e armazenamento de matriz esparsa.
-- **Matplotlib**: Para visualização gráfica das soluções.
-- **Pandas, PrettyTable e Tabulate**: Para organizar e imprimir os erros em tabelas.
+- **NumPy**: For array and matrix manipulation.
+- **SciPy**: For iterative methods and sparse matrix storage.
+- **Matplotlib**: For graphical visualization of the solutions.
+- **Pandas, PrettyTable, and Tabulate**: For organizing and displaying errors in tables.
 
-## Metodologia 💻
+## Methodology 💻
 
-1. **Discretização**: Utilizamos o método de diferenças finitas centradas.
-2. **Resolução do Sistema Linear**: Aplicamos um método iterativo para resolver o sistema linear resultante da discretização.
-3. **Simulações**: Realizamos simulações para diferentes valores de $N$ (tamanho da malha).
+1. **Discretization**: We apply the centered finite difference method.
+2. **Solving the Linear System**: An iterative method is used to solve the linear system resulting from the discretization.
+3. **Simulations**: Simulations are run for different values of $N$ (mesh size).
