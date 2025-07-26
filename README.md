@@ -1,26 +1,68 @@
-# Study of the Dirichlet Problem for the Poisson Equation with Finite Discretization
+# 🧮 Finite Difference Method for the Poisson Equation
 
-This repository focuses on the Dirichlet problem for the Poisson equation, which is discretized over the unit square using the finite difference method with spacing $h = \frac{1}{N}$. The equations describing $U_{mn}$, along with the boundary conditions, are organized into a linear system. This system is then solved using lexicographic ordering to facilitate the numerical solution process.
+This repository presents a numerical study of the **Dirichlet problem** for the **Poisson equation** on the unit square $(0, 1) \times (0, 1)$, using the **finite difference method**. The domain is discretized with step size $h = \frac{1}{N} $, and the resulting system is solved efficiently via sparse matrix techniques and lexicographic ordering.
 
-## Problem Description 📝
+## 📘 Problem Statement
 
-The Poisson equation we aim to solve is given by:
+We aim to solve the Poisson equation:
 
-$-\Delta u(x, y) = f(x, y), \quad (x, y) \in \Omega$
 
-where $\Omega = (0, 1) \times (0, 1)$, and Dirichlet boundary conditions are imposed on the boundary $\partial\Omega$.
+$$- \Delta u(x, y) = f(x, y), \quad (x, y) \in \Omega = (0, 1) \times (0, 1)$$
 
-## Tools Used 🔧
+subject to Dirichlet boundary conditions:
 
-To implement and solve the problem, we use the following Python libraries:
+$$u(x, y) = g(x, y), \quad (x, y) \in \partial\Omega$$
 
-- **NumPy**: For array and matrix manipulation.
-- **SciPy**: For iterative methods and sparse matrix storage.
-- **Matplotlib**: For graphical visualization of the solutions.
-- **Pandas, PrettyTable, and Tabulate**: For organizing and displaying errors in tables.
+## ⚙️ Methodology
 
-## Methodology 💻
+- **Discretization**: The Laplacian is approximated using the second-order centered finite difference method.
+- **System Assembly**: The discrete equations form a linear system $AU = b$, solved using sparse direct solvers.
+- **Grid Refinement**: Simulations are run for increasing values of $N$ to verify convergence.
+- **Validation**: Numerical solutions are compared against exact solutions, and error tables are generated.
 
-1. **Discretization**: We apply the centered finite difference method.
-2. **Solving the Linear System**: An iterative method is used to solve the linear system resulting from the discretization.
-3. **Simulations**: Simulations are run for different values of $N$ (mesh size).
+## 🧪 Features
+
+- Supports custom forcing terms $f(x, y)$ and exact solutions for benchmarking
+- Handles Dirichlet boundary conditions directly
+- Produces 3D surface plots of the numerical and exact solutions
+- Exports error tables for each simulation as `.csv` files
+
+## 🛠 Dependencies
+
+This project uses the following Python libraries:
+
+- [`numpy`](https://numpy.org/)
+- [`scipy`](https://scipy.org/)
+- [`matplotlib`](https://matplotlib.org/)
+- [`pandas`](https://pandas.pydata.org/)
+- [`prettytable`](https://pypi.org/project/prettytable/)
+- [`tabulate`](https://pypi.org/project/tabulate/)
+
+## 📁 Repository Structure
+```
+Diff-Poisson/
+├── 01_src/ # Jupyter notebooks with source code
+├── 02_assets/ # Simulation plots (PNG)
+├── 03_data/ # Error tables (CSV)
+├── 04_report/ # Final report and LaTeX files
+├── README.md
+├── LICENSE
+```
+
+## 📊 Example Simulations
+
+Two exact solutions were used for validation:
+
+- $u(x, y) = x^4 - 6x^2 y^2 + y^4$
+- $u(x, y) = e^x \sin(y)$
+
+Simulations were performed with $N = 20, 50, 100, 200$. Plots and error tables are available in the respective folders.
+
+## 📄 Report
+
+The full documentation of this project can be found in [`04_report/Finite_Difference_Solution_of_the_Poisson_Equation.pdf`](./04_report/Finite_Difference_Solution_of_the_Poisson_Equation.pdf).
+
+## 👥 Authors
+
+- **[Julio Cezar de Moura Lima](https://github.com/Juliocezar7253)**
+- **[Lucas Amaral Taylor](https://github.com/lucasamtaylor01)**
